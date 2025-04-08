@@ -1,19 +1,31 @@
-# x16_calc
+x16_calc
+Assembly Calculator (Bootloader)
 
-# Assembly Calculator (DOS)
+A simple calculator written in x86 assembly (NASM) that runs as a bootloader. The program performs a hardcoded addition of two numbers (5 and 3), converts the result to a string, and displays it on the screen.
+How to Build and Run
 
-A simple calculator for DOS written in assembly (NASM). The program prompts for two numbers and an operation (+, -, *, /), performs the calculation, and displays the result.
+    Install NASM (nasm).
+    Compile the code: nasm -f bin calculator.asm -o calculator.bin
+    Run in an emulator or on real hardware (e.g., QEMU, Bochs, or a bootable floppy/USB):
+        For QEMU: qemu-system-i386 -fda calculator.bin
 
-## How to Build and Run
-1. Install NASM (`nasm`).
-2. Compile the code: `nasm -f bin calculator.asm -o calculator.com`
-3. Run in a DOS emulator (e.g., DOSBox): `calculator.com`
+Features
 
-## Features
-- Supports addition, subtraction, multiplication, and division.
-- Handles integer numbers.
-- Displays an error for invalid operations.
+    Performs addition of two hardcoded integer values (5 and 3).
+    Converts the numeric result to a string for display.
+    Outputs the result to the screen using BIOS interrupts.
 
-## Limitations
-- Works only with integers.
-- Does not support negative numbers or large values.
+Limitations
+
+    Only supports a single hardcoded operation (addition of 5 and 3).
+    Works only with positive integers.
+    No user input functionality.
+    Designed to run as a bootloader at memory address 0x7c00.
+
+Code Details
+
+    Origin: The code starts at org 0x7c00, typical for boot sector programs.
+    Operation: Adds two numbers (5 in AX and 3 in BX) using add.
+    Conversion: Uses itoa routine to convert the result to a string.
+    Output: Uses BIOS interrupt 0x10 to print the result character by character.
+    Boot Signature: Ends with 0xAA55 to mark it as a valid boot sector.
